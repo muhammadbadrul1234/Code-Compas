@@ -4,23 +4,26 @@ import styled from "styled-components";
 import Course from "../components/Course";
 import { useCoursesContext } from '../context/course_context';
 
+
 const CoursesPage = () => {
   const {category} = useParams();
   const {courses} = useCoursesContext();
 
   return (
     <CoursesPageWrapper>
-      <div className='container'>
-        <div className='category-based-list'>
-          {
-            courses.filter(course => course.category === category).map((course) => (
-              <Course key = {course.id} {...course} />
-            ))
-          }
+      
+
+      <div className="container">
+        <div className="category-based-list">
+          {courses
+            .filter((course) => course.category === category)
+            .map((course) => (
+              <Course key={course.id} {...course} />
+            ))}
         </div>
       </div>
     </CoursesPageWrapper>
-  )
+  );
 }
 
 const CoursesPageWrapper = styled.div`

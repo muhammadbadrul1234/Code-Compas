@@ -40,38 +40,38 @@ const CourseCard = styled.div`
   box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
   display: flex;
   flex-direction: column;
-  .item-body{
+  .item-body {
     margin: 14px 0;
     padding: 4px 18px;
 
-    .item-name{
+    .item-name {
       font-size: 15px;
       line-height: 1.4;
       font-weight: 800;
     }
-    .item-creator{
+    .item-creator {
       font-size: 12.5px;
       font-weight: 500;
       color: rgba(0, 0, 0, 0.6);
     }
-    .rating-star-val{
+    .rating-star-val {
       margin-bottom: 5px;
       font-size: 14px;
       font-weight: 800;
       color: #b4690e;
       margin-right: 6px;
     }
-    .rating-count{
+    .rating-count {
       font-size: 12.5px;
       margin-left: 3px;
       font-weight: 500;
       opacity: 0.8;
     }
-    .item-price-new{
+    .item-price-new {
       font-weight: 700;
       font-size: 15px;
     }
-    .item-price-old{
+    .item-price-old {
       opacity: 0.8;
       font-weight: 500;
       text-decoration: line-through;
@@ -80,11 +80,11 @@ const CourseCard = styled.div`
     }
   }
 
-  .item-btns{
+  .item-btns {
     justify-self: flex-start;
     padding: 4px 8px 30px 18px;
     margin-top: auto;
-    .item-btn{
+    .item-btn {
       font-size: 15px;
       display: inline-block;
       padding: 6px 16px;
@@ -92,25 +92,26 @@ const CourseCard = styled.div`
       transition: var(--transition);
       white-space: nowrap;
 
-      &.see-details-btn{
+      &.see-details-btn {
         background-color: transparent;
-        border: 1px solid var(--clr-black);
+        border: 1px solid;
+        border-color: #336cff;
         margin-right: 5px;
 
-        &:hover{
-          background-color: rgba(0, 0, 0, 0.9);
+        &:hover {
+          background-color: #336cff;
           color: var(--clr-white);
         }
       }
 
-      &.add-to-cart-btn{
-        background: rgba(0, 0, 0, 0.9);
+      &.add-to-cart-btn {
+        background: #336cff;
         color: var(--clr-white);
-        border: 1px solid rgba(0, 0, 0, 0.9);
+        border: 1px solid;
 
-        &:hover{
+        &:hover {
           background-color: transparent;
-          color: rgba(0, 0, 0, 0.9);
+          color: #336cff;
         }
       }
     }

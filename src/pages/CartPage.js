@@ -2,7 +2,8 @@ import React from 'react';
 import { useCartContext } from '../context/cart_context';
 import styled from "styled-components";
 import CartItem from "../components/CartItem";
-import {MdClear} from "react-icons/md";
+import { MdClear } from "react-icons/md";
+
 
 const CartPage = () => {
   const {cart: cartItems, total_items, total_amount, clearCart} = useCartContext();

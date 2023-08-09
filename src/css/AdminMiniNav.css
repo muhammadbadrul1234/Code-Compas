@@ -1,0 +1,28 @@
+
+
+.mini-navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  width: 800px;
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+li:hover {
+  text-decoration: underline;
+}
