@@ -64,8 +64,8 @@ const SingleCoursePage = () => {
 
           <div className='course-foot'>
             <div className='course-price'>
-              <span className='new-price fs-26 fw-8'>${discounted_price}</span>
-              <span className='old-price fs-26 fw-6'>${actual_price}</span>
+              <span className='new-price fs-26 fw-8'>BDT{discounted_price}</span>
+              <span className='old-price fs-26 fw-6'>BDT{actual_price}</span>
             </div>
           </div>
 

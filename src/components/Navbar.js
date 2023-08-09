@@ -4,6 +4,8 @@ import {MdMenu, MdShoppingCart} from "react-icons/md";
 import {Link} from 'react-router-dom';
 import { useSidebarContext } from '../context/sidebar_context';
 import { useCartContext } from '../context/cart_context';
+import h1logo from "../assets/images/h1logo.png";
+
 
 const Navbar = () => {
   const {total_items} = useCartContext();
@@ -14,7 +16,7 @@ const Navbar = () => {
       <div className='container w-100'>
         <div className='brand-and-toggler flex flex-between w-100'>
           <Link to = "/" className='navbar-brand text-uppercase ls-1 fw-8'>
-            <span>c</span>oursean
+          <img src={h1logo} alt="Code Compass" />
           </Link>
 
           <div className='navbar-btns flex'>
