@@ -49,7 +49,7 @@ const CartPage = () => {
           <div className='cart-grid-right'>
             <div className='cart-total'>
               <span className='d-block fs-18 fw-6'>Total:</span>
-              <div className='cart-total-value fw-8'>${total_amount.toFixed(2)}</div>
+              <div className='cart-total-value fw-8'>BDT{total_amount.toFixed(2)}</div>
               <button type = "button" className='checkout-btn bg-purple text-white fw-6'>Checkout</button>
             </div>
           </div>

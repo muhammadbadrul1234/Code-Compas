@@ -1,4 +1,4 @@
-import hero_img from "../assets/images/hero_img.png";
+import hero_img from "../assets/images/hero_img.jpg";
 import logo_udemy from "../assets/images/logo_udemy.svg";
 
 import aws_1 from "../assets/images/aws_1.jpg";

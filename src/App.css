@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 :root{
-    --base-font: 'Raleway', sans-serif;
+    --base-font: 'Poppins', sans-serif;
     --clr-white: #fff;
     --clr-black: #000;
     --clr-orange: #fd9644;
@@ -20,6 +20,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border-radius: 5px;
     scroll-behavior: smooth;
 }
 html{
@@ -53,6 +54,13 @@ img{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.logo{
+    display: flex;
+    grid-column: 1/2;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3rem;
 }
 button{
     cursor: pointer;
