@@ -58,7 +58,9 @@ const Fetch = () => {
         <div className="left">
           <div>
             <h1>Fetching Data by ID</h1>
+            <p></p>
             <FetchDataById documentId={documentId} />
+            
           </div>
         </div>
         <div className="right">

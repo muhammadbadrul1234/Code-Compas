@@ -24,7 +24,12 @@ const Login = () => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
       console.log(user);
+      if(email === "admin@gmail.com" ){
+        navigate("/admin");
+      }
+      else{
       navigate("/home");
+      }
     } catch (error) {
       console.log("error");
       console.log("cant create user");

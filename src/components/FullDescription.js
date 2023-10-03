@@ -37,7 +37,7 @@ export const FetchDataById = ({ documentId }) => {
         <div>
           <h2>Data for ID: {documentId}</h2>
           <p>Name: {data.name}</p>
-          <p>Age: {data.age}</p>
+          <p>Problem Description: {data.description}</p>
           {/* Add other fields you have in your data */}
         </div>
       ) : (

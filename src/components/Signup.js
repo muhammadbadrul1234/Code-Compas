@@ -35,17 +35,21 @@ const Signup = () => {
 
   const signup = async (e) => {
     try {
+      navigate("/home");
+
       const user = await createUserWithEmailAndPassword(auth, email, password);
       console.log(user);
       console.log("user created");
-      navigate("/login");
+      navigate("/home");
+      
 
     } catch (error) {
       console.log(error.message);
       console.log("cant create user");
-      navigate("/login");
+      navigate("/home");
 
     }
+    navigate("/home")
   };
 
   
