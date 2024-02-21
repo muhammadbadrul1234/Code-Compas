@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 import Navbar1 from "./Navbar1";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
+import styled from "styled-components";
 
 const Login = () => {
-
   const navigate = useNavigate();
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -24,34 +24,27 @@ const Login = () => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
       console.log(user);
-      if(email === "admin@gmail.com" ){
+      if (email === "admin@gmail.com") {
         navigate("/admin");
-      }
-      else{
-      navigate("/home");
+      } else {
+        navigate("/home");
       }
     } catch (error) {
-      console.log("error");
+      console.log(error.message);
       console.log("cant create user");
     }
-  
-  }
+  };
 
   const handlelogin = (e) => {
     e.preventDefault();
     setError(true);
-    navigate("/home");
-
+    login();
   };
-
-
-
-
 
   return (
     <>
       <Navbar1 />
-      <section className="Login">
+      <LoginSection className="Login">
         {/* <Header/> */}
 
         <div className="container mt-5">
@@ -115,9 +108,112 @@ const Login = () => {
             </form>
           </div>
         </div>
-      </section>
+      </LoginSection>
     </>
   );
 };
+
+const LoginSection = styled.section`
+  body {
+    background-color: #f2f2f2;
+  }
+  .container {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 5px;
+    margin-top: 100px;
+  }
+  form {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+  }
+  form input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #646464;
+    border-radius: 5px;
+    outline: 1;
+    padding: 0 10px;
+    background: #f2f2f1;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    transition: all 0.6s ease-in-out;
+  }
+  .checkbox {
+    margin-bottom: 101px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+  }
+  .checkbox input {
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    border: 1px solid #646464;
+    transition: all 0.6s ease-in-out;
+  }
+  span {
+    font-size: 13px;
+    color: #ff0000;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    margin: 10px;
+    transition: all 0.6s ease-in-out;
+  }
+  h2 {
+    font-size: 30px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.5px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    color: #000000;
+  }
+  .signup {
+    width: 100%;
+    text-align: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .signup .container {
+    margin-top: 100px;
+  }
+  a {
+    text-decoration: none;
+    color: #336cff;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.1px;
+    transition: all 0.6s ease-in-out;
+    margin-bottom: 10px;
+  }
+  .form-submit {
+    width: 200px;
+    margin-top: 10px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #336cff;
+    border: 1px solid #336cff;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.1px;
+    transition: all 0.6s ease-in-out;
+  }
+`;
 
 export default Login;

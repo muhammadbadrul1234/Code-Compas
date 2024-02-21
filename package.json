@@ -10,7 +10,7 @@
     "body-parser": "^1.19.0",
     "compilex": "^0.7.4",
     "express": "^4.17.1",
-    "firebase": "^10.1.0",
+    "firebase": "^10.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
