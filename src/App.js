@@ -14,6 +14,7 @@ import Problemset from './components/Problemset';
 import CompServer from './components/Compiler_Server';
 import AdminPage from './pages/AdminPage';
 import AdminUserManage from './pages/AdminUserManage';
+import LandingPage from './components/LandingPage/LandingPage';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
 
         
         <Route path="/compiler" element={<Compiler />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/login" element={<Login />} />

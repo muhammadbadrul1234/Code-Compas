@@ -1,4 +1,4 @@
-
+/* 
 
 .mini-navbar {
   background-color: #333;
@@ -6,8 +6,8 @@
   padding: 10px;
   width: 800px;
   display: flex;
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering */
+  justify-content: center; 
+  align-items: center; 
 }
 
 ul {
@@ -25,4 +25,4 @@ li {
 
 li:hover {
   text-decoration: underline;
-}
+} */
