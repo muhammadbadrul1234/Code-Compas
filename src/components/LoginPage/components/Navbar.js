@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import "../css/Navbar.css";
-import h1logo from "../assets/images/h1logo.png";
-import styled from "styled-components";
 
+import h1logo from "../assets/h1logo.png";
+import styled from "styled-components";
 
 const Navbar1 = () => {
   const [showLinks, setShowLinks] = React.useState(false);
@@ -24,9 +23,6 @@ const Navbar1 = () => {
                 </li>
                 <li>
                   <a href="/aboutUs">About Us</a>
-                </li>
-                <li>
-                  <a href="/layout">Layout</a>
                 </li>
               </ul>
             </div>

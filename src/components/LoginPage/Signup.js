@@ -1,18 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "../css/Signup.css";
 import { useState } from "react";
-import { validateEmail, validatePassword } from "./UserValidation";
+import { validateEmail, validatePassword } from "../UserValidation";
 import { useNavigate } from "react-router-dom";
-import Navbar1 from "./Navbar1";
+import Navbar from "./components/Navbar";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth, db } from "./firebase";
+import { auth, db } from "../firebase";
 import { getCollection, getDocs } from "firebase/firestore";
 import styled from "styled-components";
-import app from "./firebase";
+import app from "../firebase";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -49,7 +48,7 @@ const Signup = () => {
 
   return (
     <>
-      <Navbar1 />
+      <Navbar />
       <Signupsection className="signup">
         <div className="container mt-5">
           <div className="signup-content">
@@ -159,9 +158,9 @@ const Signup = () => {
                   onClick={signup}
                 />
               </div>
-              <div className="or">
+              {/* <div className="or">
                 <span>Or</span>
-              </div>
+              </div> */}
               {/* Google Signup
               <div className="gform-group form-button">
                 <input
@@ -186,6 +185,9 @@ const Signupsection = styled.section`
     background-color: #f2f2f2;
   }
 
+  div {
+    text-align: center;
+  }
   h2 {
     font-size: 30px;
     font-weight: 600;

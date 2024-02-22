@@ -18,40 +18,31 @@ const Layout = () => {
     navigate("/fetch");
   };
 
-    const handleButton4Click = () => {
+  const handleButton4Click = () => {
     navigate("/problemset");
   };
 
-    const handleButton5Click = () => {
+  const handleButton5Click = () => {
     navigate("/admin");
   };
-    const handleButton6Click = () => {
+  const handleButton6Click = () => {
     navigate("/adminusermanage");
-   
   };
 
-    const handleButton7Click = () => {
-      navigate("/home");
-    
+  const handleButton7Click = () => {
+    navigate("/home");
   };
 
-    const handleButton8Click = () => {
-      navigate("/cart");
-    
+  const handleButton8Click = () => {
+    navigate("/cart");
   };
 
-    const handleButton9Click = () => {
-      
-    
-  };
+  const handleButton9Click = () => {};
 
-    const handleButton10Click = () => {
-      navigate("courses/1");
-    
+  const handleButton10Click = () => {
+    navigate("courses/1");
   };
-  const handleButton11Click = () => {
-    
-  };
+  const handleButton11Click = () => {};
 
   return (
     <>

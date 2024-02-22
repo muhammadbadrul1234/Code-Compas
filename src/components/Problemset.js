@@ -5,7 +5,6 @@ import "firebase/firestore";
 import "../css/Problemset.css";
 import Navbar1 from "./Navbar1";
 
-
 const Problemset = () => {
   const [allDocs, setAllDocs] = useState([]);
 
@@ -51,5 +50,3 @@ const Problemset = () => {
 };
 
 export default Problemset;
-
-

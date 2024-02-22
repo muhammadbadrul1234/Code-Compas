@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "../css/Login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar1 from "./Navbar1";
+import Navbar from "./components/Navbar";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "../firebase";
 import styled from "styled-components";
 
 const Login = () => {
@@ -43,7 +42,7 @@ const Login = () => {
 
   return (
     <>
-      <Navbar1 />
+      <Navbar />
       <LoginSection className="Login">
         {/* <Header/> */}
 
@@ -117,6 +116,7 @@ const LoginSection = styled.section`
   body {
     background-color: #f2f2f2;
   }
+
   .container {
     width: 100%;
     max-width: 500px;
@@ -170,6 +170,9 @@ const LoginSection = styled.section`
     margin: 10px;
     transition: all 0.6s ease-in-out;
   }
+  div {
+    text-align: center;
+  }
   h2 {
     font-size: 30px;
     font-weight: 600;
@@ -213,6 +216,134 @@ const LoginSection = styled.section`
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.1px;
     transition: all 0.6s ease-in-out;
+  }
+  body {
+    background-color: #f2f2f2;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.5px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    color: #000000;
+    text-align: center; /* Center the text */
+  }
+
+  .signup {
+    width: 100%;
+    text-align: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .signup .container {
+    margin-top: 100px;
+
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 5px;
+  }
+
+  form {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+  }
+
+  form input {
+    width: 100%;
+    height: 40px;
+    border-color: #eeeeec;
+    border-radius: 5px;
+    outline: none;
+    padding: 0 20px;
+    background: #f2f2f1;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.1px;
+    margin-bottom: 20px;
+    transition: all 0.6s ease-in-out;
+  }
+  form input:focus {
+    border-color: #336cff;
+    background: #fff;
+  }
+
+  .checkbox {
+    margin-bottom: 101px;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.8px;
+  }
+
+  .checkbox input {
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #336cff;
+    border: 1px solid #336cff;
+    border-color: #336cff;
+    transition: all 0.6s ease-in-out;
+  }
+
+  a {
+    text-decoration: none;
+    color: #336cff;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.1px;
+    transition: all 0.6s ease-in-out;
+    margin-bottom: 10px;
+  }
+
+  .form-submit {
+    width: 200px;
+    margin-top: 10px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #336cff;
+    border: 1px solid #336cff;
+    border-color: #336cff;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.1px;
+    transition: all 0.6s ease-in-out;
+  }
+
+  .gform-submit {
+    width: 200px;
+    margin-top: 10px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.1px;
+    transition: all 0.6s ease-in-out;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
