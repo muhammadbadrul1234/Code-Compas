@@ -14,8 +14,31 @@ import AdminPage from "./components/AdminPage/Home Page/AdminPage";
 import AdminUserManage from "./pages/AdminUserManage";
 import LandingPage from "./components/LandingPage/LandingPage";
 import AdminHome from "./components/AdminPage/Home Page/cpages/Home";
+import About from "./components/About Us/About";
+import Bio from "./components/About Us/Bio";
 
 function App() {
+    const isMobile = window.innerWidth <= 900; // You can adjust the threshold
+
+    if (isMobile) {
+      return (
+        <div style={{ textAlign: "center", padding: "50px" }}>
+          <h1 style={{ color: "red" }}>
+            Sorry, This Website is Not Supported on Mobile Devices
+          </h1>
+          <p>
+            Our website utilizes highly advanced architecture and features that
+            are optimized for desktop environments. To provide the best user
+            experience, we recommend accessing this website on a larger screen.
+          </p>
+          <p>
+            If you are on a mobile device, please switch to a desktop or laptop
+            computer for the optimal experience. We apologize for any
+            inconvenience.
+          </p>
+        </div>
+      );
+    }
   return (
     <BrowserRouter>
       <Routes>
@@ -34,6 +57,9 @@ function App() {
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/adminusermanage" element={<AdminUserManage />} />
         <Route path="/description/:id" component={Fetch} />
+
+        <Route path="/about" element={<About />} />
+        <Route path="/devs" element={<Bio />} />
       </Routes>
     </BrowserRouter>
   );
