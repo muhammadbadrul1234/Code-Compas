@@ -5,13 +5,18 @@ import { SidebarProvider } from './context/sidebar_context';
 import { CoursesProvider } from './context/course_context';
 import { CartProvider } from './context/cart_context';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <SidebarProvider>
     <CoursesProvider>
       <CartProvider>
-        <App />
+        
+          <App />
+        
       </CartProvider>
     </CoursesProvider>
-  </SidebarProvider>
+    </SidebarProvider>
+    
 );

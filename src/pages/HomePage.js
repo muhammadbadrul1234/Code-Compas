@@ -10,7 +10,6 @@ import Navbar2 from "../components/Navbar2";
 const HomePage = () => {
   return (
     <div className="holder">
-      <Navbar2 />
       <Navbar />
       <Sidebar />
       <Hero />

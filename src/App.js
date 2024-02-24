@@ -10,9 +10,10 @@ import Layout from "./components/Layout";
 import Fetch from "./components/FetchData";
 import Problemset from "./components/Problemset";
 import CompServer from "./components/Compiler_Server";
-import AdminPage from "./pages/AdminPage";
+import AdminPage from "./components/AdminPage/Home Page/AdminPage";
 import AdminUserManage from "./pages/AdminUserManage";
 import LandingPage from "./components/LandingPage/LandingPage";
+import AdminHome from "./components/AdminPage/Home Page/cpages/Home";
 
 function App() {
   return (
@@ -30,8 +31,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/fetch" element={<Fetch />} />
         <Route path="/problemset" element={<Problemset />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin" element={<AdminHome />} />
         <Route path="/adminusermanage" element={<AdminUserManage />} />
+        <Route path="/description/:id" component={Fetch} />
       </Routes>
     </BrowserRouter>
   );

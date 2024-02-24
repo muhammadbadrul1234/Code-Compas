@@ -4,9 +4,15 @@ import { db, app } from "./firebase";
 import "firebase/firestore";
 import "../css/Problemset.css";
 import Navbar1 from "./Navbar1";
+import Fetch from "./FetchData";
+import { useNavigate} from "react-router-dom";
+// Import your Firebase configuration
 
 const Problemset = () => {
+  const navigate = useNavigate();
   const [allDocs, setAllDocs] = useState([]);
+  const [selectedDocumentId, setSelectedDocumentId] = useState(null);
+ 
 
   useEffect(() => {
     console.log("fetching all docs");
@@ -14,11 +20,19 @@ const Problemset = () => {
     db.collection("problemset")
       .get()
       .then((snapshot) => {
-        const docs = snapshot.docs.map((doc) => doc.data());
+        const docs = snapshot.docs.map((doc) => ({
+          documentId: doc.id,
+          ...doc.data(),
+        }));
         console.log(docs);
         setAllDocs(docs);
       });
   }, []);
+
+  const handleCardClick = (documentId) => {
+     navigate("/fetch", { state: { data: documentId } });
+    // You can perform additional actions if needed
+  };
 
   return (
     <>
@@ -29,8 +43,11 @@ const Problemset = () => {
         <ul>
           {allDocs.map((problem) => (
             <li key={problem.category1}>
-              <Link to={`/description/${problem.id}`}>
-                <div className="card">
+              {/* <Link to={`/description/${problem.documentId}`}> */}
+                <div
+                  className="card"
+                  onClick={() => handleCardClick(problem.documentId)}
+                >
                   <strong>{problem.category1}</strong>
                   <strong>{problem.category2}</strong>
                   <strong>{"  : "}</strong>
@@ -40,7 +57,7 @@ const Problemset = () => {
                     {problem.rating}
                   </p>
                 </div>
-              </Link>
+              {/* </Link> */}
             </li>
           ))}
         </ul>

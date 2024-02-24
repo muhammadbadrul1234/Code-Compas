@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -14,30 +14,68 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
+  const initialValues = { email: "", password: "" };
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [loginError, setLoginError] = useState(null);
 
   const toggle = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
   const login = async (e) => {
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user);
-      if (email === "admin@gmail.com") {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        formValues.email,
+        formValues.password
+      );
+
+      if (formValues.email === "admin@gmail.com") {
         navigate("/admin");
       } else {
         navigate("/home");
       }
     } catch (error) {
       console.log(error.message);
-      console.log("cant create user");
+
     }
   };
 
-  const handlelogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError(true);
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
     login();
+  };
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
+
+  const validate = (values) => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!emailRegex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (values.password.length < 8) {
+      errors.password = "Password must be at least 8 characters";
+    }
+    return errors;
   };
 
   return (
@@ -54,14 +92,18 @@ const Login = () => {
               {/* Email */}
               <div className="login-form-group">
                 <label htmlFor="email"></label>
+
                 <input
                   type="email"
                   name="email"
                   id="email"
                   autoComplete="off"
                   placeholder="Email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  // onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleChange}
+                  value={formValues.email}
                 />
+                <p>{formErrors.email}</p>
               </div>
 
               {/* Password */}
@@ -73,9 +115,12 @@ const Login = () => {
                   id="password"
                   autoComplete="off"
                   placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  // onChange={(e) => setPassword(e.target.value)}
+                  value={formValues.password}
+                  onChange={handleChange}
                 />
               </div>
+              <p>{formErrors.password}</p>
 
               {/* {error && <span>Wrong Email or Password</span>} */}
 
@@ -101,7 +146,7 @@ const Login = () => {
                   id="Login"
                   className="form-submit"
                   value="Login"
-                  onClick={handlelogin}
+                  onClick={handleSubmit}
                 />
               </div>
             </form>
@@ -132,7 +177,7 @@ const LoginSection = styled.section`
   }
   form input {
     width: 100%;
-    height: 40px;
+    height: 10px;
     border: 1px solid #646464;
     border-radius: 5px;
     outline: 1;
@@ -269,7 +314,8 @@ const LoginSection = styled.section`
     font-weight: 500;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.1px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    margin-top: 10px;
     transition: all 0.6s ease-in-out;
   }
   form input:focus {
@@ -344,6 +390,10 @@ const LoginSection = styled.section`
     transition: all 0.6s ease-in-out;
     align-items: center;
     justify-content: center;
+  }
+  p {
+    color: red;
+    font-size: 13px;
   }
 `;
 

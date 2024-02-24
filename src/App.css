@@ -26,6 +26,9 @@
 html{
     font-size: 13px;
 }
+/* body > iframe {
+  display: none;
+} */
 body{
     font-size: 1.6rem;
     line-height: 1.6;

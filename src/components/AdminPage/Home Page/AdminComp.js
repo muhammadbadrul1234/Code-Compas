@@ -1,6 +1,6 @@
 // AdminPage.js
 import React from "react";
-import "../css/AdminPage.css";
+
 
 const AdminComp = () => {
   const handleButton1Click = () => {
@@ -22,7 +22,6 @@ const AdminComp = () => {
 
   return (
     <div className="admin-page">
-      <h1>Admin Operation</h1>
       <div className="button-container">
         <button onClick={handleButton1Click}>User Management </button>
         <button onClick={handleButton2Click}>ProblemSet Management </button>
