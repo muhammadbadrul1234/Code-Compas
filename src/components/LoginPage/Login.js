@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import styled from "styled-components";
+import HomeNavbar from "../LandingPage/Components/Navbar";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const Login = () => {
 
   return (
     <>
-      <Navbar />
+      <HomeNavbar />
       <LoginSection className="Login">
         {/* <Header/> */}
 

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { useState } from "react";
 import { validateEmail, validatePassword } from "../UserValidation";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import HomeNavbar from "../LandingPage/Components/Navbar";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -12,6 +12,7 @@ import { auth, db } from "../firebase";
 import { getCollection, getDocs } from "firebase/firestore";
 import styled from "styled-components";
 import app from "../firebase";
+import BannerBackground from "./assets/home-banner-background.png";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -48,9 +49,12 @@ const Signup = () => {
 
   return (
     <>
-      <Navbar />
+      <HomeNavbar />
       <Signupsection className="signup">
         <div className="container mt-5">
+          <div className="home-bannerImage-container">
+            <img src={BannerBackground} alt="" />
+          </div>
           <div className="signup-content">
             <div className="signup-form"></div>
             <h2>Create your Account</h2>
@@ -205,6 +209,14 @@ const Signupsection = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .home-bannerImage-container {
+    position: absolute;
+    top: -100px;
+    right: -170px;
+    z-index: -2;
+    max-width: 700px;
   }
 
   .signup .container {

@@ -2,8 +2,14 @@
 import React, { useState } from "react";
 import Logo from "../Assets/h1logo.png";
 import styled from "styled-components";
+import { Link, useLocation } from "react-router-dom";
 const HomeNavbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+    const ishomePage = location.pathname === "/";
+    const isDevPage = location.pathname === "/devs";
+    const isaboutPage = location.pathname === "/about";
   const menuOptions = [
   ];
   return (
@@ -33,10 +39,31 @@ const HomeNavbar = () => {
             <img src={Logo} alt="" style={{ width: "200px" }} />
           </div>
 
-          <div className="navbar-links-container">
-            <a href="/login">
-              <button className="primary-button">Login</button>
-            </a>
+          <div className="menu">
+            <ul>
+              {!ishomePage && (
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+              )}
+              {!isDevPage && (
+                <li>
+                  <Link to="/devs">Developers</Link>
+                </li>
+              )}
+              {!isaboutPage && (
+                <li>
+                  <Link to="/about">About Us</Link>
+                </li>
+              )}
+              {!isLoginPage && (
+                <li>
+                  <Link to="/login">
+                    <button className="primary-button">Login</button>
+                  </Link>
+                </li>
+              )}
+            </ul>
           </div>
         </nav>
 
@@ -67,6 +94,31 @@ const HomeNavbarSection = styled.section`
     color: black;
     font-size: 1.1rem;
     font-weight: 600;
+  }
+
+  .menu {
+    width: 400px;
+    grid-column: 3/3;
+    margin-right: 3rem;
+    margin-top: 1rem;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu ul {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    
+    
+  }
+
+  .menu ul :hover {
+    color: #336cff;
   }
 
   .primary-button {
