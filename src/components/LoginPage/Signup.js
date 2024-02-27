@@ -1,18 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { useState } from "react";
-import { validateEmail, validatePassword } from "../UserValidation";
+
 import { useNavigate } from "react-router-dom";
 import HomeNavbar from "../LandingPage/Components/Navbar";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendEmailVerification,
 } from "firebase/auth";
 import { auth, db } from "../firebase";
-import { getCollection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getCollection,
+  getDocs,
+  addDoc,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import styled from "styled-components";
 import app from "../firebase";
 import BannerBackground from "./assets/home-banner-background.png";
+import Modal from "../Modals/SignUp/Modal";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -22,39 +31,57 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const toggle = () => {
     setShowPassword(!showPassword);
   };
 
-  // const ffstore = db.firestore().collection("users");
-  // // console.log(ffstore);
-
-  // print firebase colelction
 
   const signup = async (e) => {
+    e.preventDefault();
+    
     try {
-      navigate("/home");
+      // navigate("/home");
+      
+      
       const user = await createUserWithEmailAndPassword(auth, email, password);
       console.log(user);
       console.log("user created");
-      navigate("/home");
+      sendEmailVerification(auth.currentUser);
+      const docRef = doc(db, "UserData", email);
+      const result = await setDoc(
+        docRef,
+        { firstname: firstName, lastname: lastName, email: email, phone: phone },
+        { merge: true }
+        
+      );
+      setOpenModal(true);
+      
+      
+
+
     } catch (error) {
       console.log(error.message);
       console.log("cant create user");
-      navigate("/home");
+
     }
-    navigate("/home");
+
   };
 
   return (
     <>
       <HomeNavbar />
+      <div>
+        <button onClick={() => setOpenModal(true)} className="modalButton"></button>
+        <Modal open={openModal} onClose={() => setOpenModal(false)} />
+      </div>
       <Signupsection className="signup">
         <div className="container mt-5">
           <div className="home-bannerImage-container">
             <img src={BannerBackground} alt="" />
           </div>
+
           <div className="signup-content">
             <div className="signup-form"></div>
             <h2>Create your Account</h2>
@@ -185,12 +212,34 @@ const Signup = () => {
 };
 
 const Signupsection = styled.section`
+  /* SignupComponent.css */
+
+  /* SignupComponent.css */
+
+  .modal-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(189, 189, 189, 0.9);
+  }
+
   body {
     background-color: #f2f2f2;
   }
 
   div {
     text-align: center;
+  }
+  .container {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 5px;
+    margin-top: 150px;
+    margin-bottom: 200px;
   }
   h2 {
     font-size: 30px;
@@ -213,10 +262,11 @@ const Signupsection = styled.section`
 
   .home-bannerImage-container {
     position: absolute;
+    width: 100%;
     top: -100px;
     right: -170px;
     z-index: -2;
-    max-width: 700px;
+    max-width: 1000px;
   }
 
   .signup .container {
@@ -238,9 +288,8 @@ const Signupsection = styled.section`
   form input {
     width: 100%;
     height: 40px;
-    border-color: #eeeeec;
     border-radius: 5px;
-    outline: none;
+    outline: 1;
     padding: 0 20px;
     background: #f2f2f1;
     font-size: 13px;
@@ -250,9 +299,11 @@ const Signupsection = styled.section`
     margin-bottom: 20px;
     transition: all 0.6s ease-in-out;
   }
+
   form input:focus {
-    border-color: #336cff;
-    background: #fff;
+    border: 0.5px solid #336cff;
+    transition: all 0.6s ease-in-out;
+    background: white;
   }
 
   .checkbox {

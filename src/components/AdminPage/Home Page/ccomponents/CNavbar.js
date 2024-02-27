@@ -111,8 +111,7 @@ export default function CNavbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+
     </Menu>
   );
 
@@ -255,7 +254,8 @@ export default function CNavbar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              Signed in As Admin
+              
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

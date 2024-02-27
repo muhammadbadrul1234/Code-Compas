@@ -13,6 +13,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import SchoolIcon from "@mui/icons-material/School";
+import ViewStreamIcon from "@mui/icons-material/ViewStream";
+import LogoutIcon from "@mui/icons-material/Logout";
+import FoundationIcon from "@mui/icons-material/Foundation";
+import StorageIcon from "@mui/icons-material/Storage";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import PublicIcon from "@mui/icons-material/Public";
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../appStore';
 
@@ -111,19 +118,16 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <FoundationIcon />
               </ListItemIcon>
-              <ListItemText
-                primary="Website Management"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary="Overview" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/about");
+              navigate("/usermanage");
             }}
           >
             <ListItemButton
@@ -140,7 +144,36 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <PeopleAltIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="User Management"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/prbmanage");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <StorageIcon />
               </ListItemIcon>
               <ListItemText
                 primary="ProblemSet Management"
@@ -169,7 +202,7 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <SchoolIcon />
               </ListItemIcon>
               <ListItemText
                 primary="Course Management"
@@ -177,35 +210,7 @@ export default function Sidenav() {
               />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/bio");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="User Management"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
+
           <ListItem
             disablePadding
             sx={{ display: "block" }}
@@ -227,11 +232,40 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <ViewStreamIcon />
               </ListItemIcon>
-              <ListItemText primary="Layouts" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Layouts Manager" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
+
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/home");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <PublicIcon />
+              </ListItemIcon>
+              <ListItemText primary="Client Website" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+
+
           <ListItem
             disablePadding
             sx={{ display: "block" }}
@@ -253,12 +287,9 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <LogoutIcon />
               </ListItemIcon>
-              <ListItemText
-                primary="Logout"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary="Logout" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>

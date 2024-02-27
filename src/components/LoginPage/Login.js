@@ -169,7 +169,7 @@ const LoginSection = styled.section`
     background-color: #fff;
     padding: 25px;
     border-radius: 5px;
-    margin-top: 100px;
+    margin-top: 200px;
   }
   form {
     width: 100%;
@@ -188,7 +188,7 @@ const LoginSection = styled.section`
     font-weight: 500;
     font-family: "Poppins", sans-serif;
     letter-spacing: 1px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     transition: all 0.6s ease-in-out;
   }
   .checkbox {
