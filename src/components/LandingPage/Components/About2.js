@@ -1,6 +1,7 @@
 import React from "react";
 import AboutBackground from "../Assets/about-background.png";
 import AboutBackgroundImage from "../Assets/about-background-image.png";
+import BlogImage from "../Assets/blog.png";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -13,7 +14,7 @@ const CourseAbout2 = () => {
           <img src={AboutBackground} alt="" />
         </div>
         <div className="about-section-image-container">
-          <img src={AboutBackgroundImage} alt="" />
+          <img src={BlogImage} alt="" />
         </div>
         <div className="about-section-text-container">
           <p className="primary-subheading">Blog</p>
@@ -31,7 +32,7 @@ const CourseAbout2 = () => {
           </p>
 
           <div className="about-buttons-container">
-            <Link to="/login">
+            <Link to="/blogs">
               <button className="secondary-button">
                
                 Start Reading

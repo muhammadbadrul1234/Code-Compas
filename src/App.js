@@ -20,6 +20,9 @@ import ErrorPage from "./components/ErrorPage/404";
 import UserManage from "./components/AdminPage/User Manage/UserManage";
 import ProblemSetManage from "./components/AdminPage/ProblemsetManagement/problemsetManage";
 import CraftPen from "./components/CraftPen/Craftpen";
+import Blogs from "./components/Blog/Blog";
+import ProfilePage from "./components/Profile/Profile";
+import Upload from "./components/FileUpload/Upload";
 function App() {
   const isMobile = window.innerWidth <= 899;
   if (isMobile) {
@@ -64,6 +67,10 @@ function App() {
         <Route path="/usermanage" element={<UserManage />} />
         <Route path="/prbmanage" element={<ProblemSetManage />} />
         <Route path="/craftpen" element={<CraftPen />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/upload" element={<Upload />} />
+        <Route path="/uploadedfile" element={<ProfilePage />} />
 
         <Route path="/description/:id" component={Fetch} />
 

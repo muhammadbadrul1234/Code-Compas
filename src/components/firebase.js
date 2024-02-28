@@ -6,6 +6,7 @@ import { getFirestore, collection } from "firebase/firestore/lite";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAGegBpQXBLClQ23UBNTRdYxctGO_rVCvI",
@@ -22,6 +23,10 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 // Use these for db & auth
 export const db = firebaseApp.firestore();
 export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+
+const app = initializeApp(firebaseConfig);
+export const storage = getStorage(app);
 
 
 
@@ -40,6 +45,8 @@ export const updateUser = (userId, data) => {
 export const deleteUser = (userId) => {
   return db.collection("users").doc(userId).delete();
 };
+
+
 
 
 
