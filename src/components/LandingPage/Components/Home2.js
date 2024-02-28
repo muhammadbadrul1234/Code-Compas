@@ -10,27 +10,26 @@ const Home2 = () => {
   return (
     <div className="home-container">
       <HomeNavbar />
-
       <HomeSection>
+        <div style={{ height: "100px" }}></div>
         <div className="home-banner-container">
-          <div className="home-bannerImage-container">
+          {/* <div className="home-bannerImage-container">
             <img src={BannerBackground} alt="" />
-          </div>
+          </div> */}
           <div className="home-text-section">
-            <p className="primary-subheading">Compiler</p>
-            <h1 className="primary-heading">
-              Your Gateway to Efficient Code Compilation
-            </h1>
+            <p className="primary-subheading">Craft Pen</p>
+            <h1 className="primary-heading">A Seamless Coding Playground</h1>
             <p className="primary-text">
-              Codecompass is your go-to platform for demystifying the
-              complexities of code compilation. Discover intelligent solutions,
-              best practices, and innovative tools that streamline your
-              development workflow.
+              Dive into the world of coding with CodeCraftPen, your ultimate
+              coding sanctuary. Experiment, collaborate, and bring your ideas to
+              life effortlessly. A feature-rich coding playground that empowers
+              both beginners and experts to craft, share, and learn in
+              real-time. Let your code speak volumes with CodeCraftPen - where
+              innovation meets simplicity.
             </p>
-
-            <Link to="/login">
+            <Link to="/craftpen">
               <button className="secondary-button">
-                Start Coding <FiArrowRight />
+                Play <FiArrowRight />
               </button>
             </Link>
           </div>
