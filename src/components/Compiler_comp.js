@@ -76,7 +76,7 @@ const Compiler_comp = () => {
               language of your choice. */}
             </p>
             {/* sample input */}
-            <p>1</p>
+            <p></p>
             {/* sample output */}
             {/* <p>Hello World</p> */}
           </div>

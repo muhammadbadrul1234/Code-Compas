@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { firestore } from "../firebase";
 import Post from "./Post";
 import HomeNavBar from "../LandingPage/Components/Navbar";
+import UserNavbar from "../Navbar/Navbar";
 
 function Blogs() {
   const [posts, setPosts] = useState([]);
@@ -9,7 +10,7 @@ function Blogs() {
   useEffect(() => {
     // Fetch data from Firestore
     const fetchData = async () => {
-      const postsCollection = await firestore.collection("blogs").get();
+      const postsCollection = await firestore.collection("Blogs").get();
       const postsData = postsCollection.docs.map((doc) => doc.data());
       setPosts(postsData);
     };
@@ -19,7 +20,7 @@ function Blogs() {
 
   return (
     <div>
-      <HomeNavBar />
+      <UserNavbar />
       <h1>Welcome to Code Compass Blog</h1>
       <div className="posts">
         {posts.map((post, index) => (

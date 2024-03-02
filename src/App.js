@@ -9,9 +9,7 @@ import Signup from "./components/LoginPage/Signup";
 import Layout from "./components/Layout";
 import Fetch from "./components/FetchData";
 import Problemset from "./components/Problemset";
-import CompServer from "./components/Compiler_Server";
 import AdminPage from "./components/AdminPage/Home Page/AdminPage";
-
 import LandingPage from "./components/LandingPage/LandingPage";
 import AdminHome from "./components/AdminPage/Home Page/cpages/Home";
 import About from "./components/About Us/About";
@@ -21,8 +19,14 @@ import UserManage from "./components/AdminPage/User Manage/UserManage";
 import ProblemSetManage from "./components/AdminPage/ProblemsetManagement/problemsetManage";
 import CraftPen from "./components/CraftPen/Craftpen";
 import Blogs from "./components/Blog/Blog";
-import ProfilePage from "./components/Profile/Profile";
+import AdminProfilePage from "./components/AdminPage/Profile/Profile";
 import Upload from "./components/FileUpload/Upload";
+import UploadedFile from "./components/FileUpload/uploadedFile";
+import BlogManage from "./components/AdminPage/BlogManagement/BlogManage";
+import Reset from "./components/LoginPage/Reset";
+import UserProfile from "./components/UserProfile/userProfile";
+import AdminProfile from "./components/AdminPage/Profile/adminProfile";
+
 function App() {
   const isMobile = window.innerWidth <= 899;
   if (isMobile) {
@@ -61,16 +65,20 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset" element={<Reset />} />
+        <Route path="/profile" element={<UserProfile />} />
+
         <Route path="/fetch" element={<Fetch />} />
         <Route path="/problemset" element={<Problemset />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/usermanage" element={<UserManage />} />
         <Route path="/prbmanage" element={<ProblemSetManage />} />
+        <Route path="/blogmanage" element={<BlogManage />} />
         <Route path="/craftpen" element={<CraftPen />} />
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/aprofile" element={<AdminProfile />} />
         <Route path="/upload" element={<Upload />} />
-        <Route path="/uploadedfile" element={<ProfilePage />} />
+        <Route path="/uploadedfile" element={<UploadedFile />} />
 
         <Route path="/description/:id" component={Fetch} />
 

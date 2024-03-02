@@ -4,13 +4,14 @@ import CoursesList from "../components/CourseList";
 import CategoriesList from "../components/CategoriesList";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import HomeNavbar from '../../LandingPage/Components/Navbar';
 
 
 
 const HomePage = () => {
   return (
     <div className="holder">
-      <Navbar />
+      <HomeNavbar/>
       <Sidebar />
       <Hero />
       <CoursesList />

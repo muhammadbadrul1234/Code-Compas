@@ -22,6 +22,9 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import PublicIcon from "@mui/icons-material/Public";
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../appStore';
+import RssFeedIcon from "@mui/icons-material/RssFeed";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const drawerWidth = 240;
 
@@ -215,7 +218,7 @@ export default function Sidenav() {
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/home");
+              navigate("/blogmanage");
             }}
           >
             <ListItemButton
@@ -232,7 +235,7 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <PublicIcon />
+                <RssFeedIcon />
               </ListItemIcon>
               <ListItemText
                 primary="Blogs Management"
@@ -245,7 +248,7 @@ export default function Sidenav() {
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/layout");
+              navigate("/uploadedfile");
             }}
           >
             <ListItemButton
@@ -262,19 +265,20 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <ViewStreamIcon />
+                <TaskAltIcon />
               </ListItemIcon>
               <ListItemText
-                primary="Layouts Manager"
+                primary="Assignments"
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
           </ListItem>
+
           <ListItem
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/home");
+              navigate("/aprofile");
             }}
           >
             <ListItemButton
@@ -291,7 +295,7 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <PublicIcon />
+                <AccountCircleIcon />
               </ListItemIcon>
               <ListItemText primary="Profile" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -322,6 +326,36 @@ export default function Sidenav() {
               </ListItemIcon>
               <ListItemText
                 primary="Client Website"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/layout");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <ViewStreamIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Layouts Manager"
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>

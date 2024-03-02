@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import HomeNavbar from "../LandingPage/Components/Navbar";
@@ -22,8 +22,18 @@ import styled from "styled-components";
 import app from "../firebase";
 import BannerBackground from "./assets/home-banner-background.png";
 import Modal from "../Modals/SignUp/Modal";
+import UserNavbar from "../Navbar/Navbar";
 
 const Signup = () => {
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  };
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,47 +43,135 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
+  const [signupError, setSignupError] = useState(null);
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const toggle = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+    if (!formErrors) {
+      signup();
+    }
+  };
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+      signup();
+    }
+  }, [formErrors]);
 
   const signup = async (e) => {
-    e.preventDefault();
-    
     try {
-      // navigate("/home");
-      
-      
-      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        formValues.email,
+        formValues.password
+      );
       console.log(user);
       console.log("user created");
       sendEmailVerification(auth.currentUser);
-      const docRef = doc(db, "UserData", email);
+      const docRef = doc(db, "UserData", formValues.email);
+      const docRef1 = doc(db, "purchasedata", formValues.email);
+      const docRef2 = doc(db, "problemdata", formValues.email);
       const result = await setDoc(
         docRef,
-        { firstname: firstName, lastname: lastName, email: email, phone: phone },
+        {
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          email: formValues.email,
+          mobile: formValues.phone,
+          role: "User",
+        },
         { merge: true }
-        
+      );
+      const result1 = await setDoc(
+        docRef1,
+        {
+          email: formValues.email,
+        },
+        { merge: true }
+      );
+      const result2 = await setDoc(
+        docRef2,
+        {
+          email: formValues.email,
+
+        },
+        { merge: true }
       );
       setOpenModal(true);
-      
-      
-
-
     } catch (error) {
-      console.log(error.message);
-      console.log("cant create user");
+      const errorMessage = error.message;
+      if (errorMessage.includes("auth/email-already-in-use")) {
+        setSignupError(
+          "The email address is already in use by another account."
+        );
+      } else {
+        // Handle other errors
+        setSignupError(errorMessage);
+      }
 
+      console.log("cant create user");
+    }
+  };
+
+  const validate = (values) => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const mobileRegex = /^(?:\+8801\d{9}|\b01\d{9}\b)$/;
+    if (!values.firstName) {
+      errors.firstName = "First name is required!";
+    }
+    if (!values.lastName) {
+      errors.lastName = "Last name is required!";
+    }
+    if (!values.confirmPassword) {
+      errors.confirmPassword = "This field is required!";
     }
 
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!emailRegex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+
+    if (!values.phone) {
+      errors.phone = "Phone is required!";
+    } else if (!mobileRegex.test(values.phone)) {
+      errors.phone = "This is not a valid number";
+    }
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (values.password.length < 8) {
+      errors.password = "Password must be at least 8 characters";
+    }
+    if (values.password !== values.confirmPassword) {
+      errors.confirmPassword = "Password does not match";
+    }
+    return errors;
   };
 
   return (
     <>
-      <HomeNavbar />
+      <UserNavbar />
       <div>
-        <button onClick={() => setOpenModal(true)} className="modalButton"></button>
+        <button
+          onClick={() => setOpenModal(true)}
+          className="modalButton"
+        ></button>
         <Modal open={openModal} onClose={() => setOpenModal(false)} />
       </div>
       <Signupsection className="signup">
@@ -87,17 +185,20 @@ const Signup = () => {
             <h2>Create your Account</h2>
 
             <form className="register-form" id="register-form">
+              <p>{signupError}</p>
               {/* First Name */}
               <div className="signup-form-group">
                 <label htmlFor="firstname"></label>
                 <input
                   type="text"
-                  name="firstname"
-                  id="firstname"
-                  autoComplete="off"
+                  name="firstName"
+                  id="firstName"
+                  autoComplete="on"
                   placeholder="First Name"
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={handleChange}
+                  value={formValues.firstName}
                 />
+                <p>{formErrors.firstName}</p>
               </div>
 
               {/* Last Name */}
@@ -105,12 +206,14 @@ const Signup = () => {
                 <label htmlFor="last-name"></label>
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
+                  name="lastName"
+                  id="lastName"
                   autoComplete="off"
                   placeholder="Last Name"
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={handleChange}
+                  value={formValues.lastName}
                 />
+                <p>{formErrors.lastName}</p>
               </div>
 
               {/* Email */}
@@ -122,8 +225,10 @@ const Signup = () => {
                   id="email"
                   autoComplete="off"
                   placeholder="Email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleChange}
+                  value={formValues.email}
                 />
+                <p>{formErrors.email}</p>
               </div>
 
               {/* Phone */}
@@ -135,8 +240,10 @@ const Signup = () => {
                   id="phone"
                   autoComplete="off"
                   placeholder="Phone"
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={handleChange}
+                  value={formValues.phone}
                 />
+                <p>{formErrors.phone}</p>
               </div>
 
               {/* Password */}
@@ -148,8 +255,10 @@ const Signup = () => {
                   id="password"
                   autoComplete="off"
                   placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handleChange}
+                  value={formValues.password}
                 />
+                <p>{formErrors.password}</p>
               </div>
 
               {/* Confirm Password */}
@@ -157,11 +266,14 @@ const Signup = () => {
                 <label htmlFor="confirm-password"></label>
                 <input
                   type={showPassword ? "text" : "password"}
-                  name="confirm-password"
-                  id="confirm-password"
+                  name="confirmPassword"
+                  id="confirmPassword"
                   autoComplete="off"
                   placeholder="Confirm Password"
+                  onChange={handleChange}
+                  value={formValues.confirmPassword}
                 />
+                <p>{formErrors.confirmPassword}</p>
               </div>
 
               {/* Checkbox */}
@@ -186,7 +298,7 @@ const Signup = () => {
                   id="signup"
                   className="form-submit"
                   value="Signup"
-                  onClick={signup}
+                  onClick={handleSubmit}
                 />
               </div>
               {/* <div className="or">
@@ -215,6 +327,10 @@ const Signupsection = styled.section`
   /* SignupComponent.css */
 
   /* SignupComponent.css */
+  p {
+    color: red;
+    font-size: 13px;
+  }
 
   .modal-wrapper {
     position: fixed;
@@ -296,7 +412,7 @@ const Signupsection = styled.section`
     font-weight: 500;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.1px;
-    margin-bottom: 20px;
+    margin-top: 20px;
     transition: all 0.6s ease-in-out;
   }
 
@@ -358,13 +474,14 @@ const Signupsection = styled.section`
     font-weight: 500;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.1px;
-    transition: all 0.6s ease-in-out;
+
   }
+
 
   .gform-submit {
     width: 200px;
-    margin-top: 10px;
-    height: 40px;
+    margin-top: 0px;
+    height: 0px;
     border-radius: 5px;
     font-size: 13px;
     font-weight: 500;

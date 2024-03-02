@@ -5,11 +5,12 @@ import HomeNavbar from "./Navbar";
 import { FiArrowRight } from "react-icons/fi";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import UserNavbar from "../../Navbar/Navbar";
 
 const Home2 = () => {
   return (
     <div className="home-container">
-      <HomeNavbar />
+      <UserNavbar />
 
       <HomeSection>
         <div className="home-banner-container">

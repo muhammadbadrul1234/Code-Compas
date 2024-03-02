@@ -35,10 +35,28 @@ export const FetchDataById = ({ documentId }) => {
     <div>
       {data ? (
         <div>
-          <h2>Data for ID: {documentId}</h2>
-          <p>Name: {data.name}</p>
-          <p>Problem Description: {data.description}</p>
+          <h5>ID: {documentId}</h5>
+          <h3>Name: {data.name}</h3>
+          <p>Description: {data.description}</p>
           {/* Add other fields you have in your data */}
+          <h4>Guide:</h4>
+          <p>Input Guide: {data.inputGuide}</p>
+          <p>Output Guide: {data.outputGuide}</p>
+          <h4>Example:</h4>
+          <div
+            style={{
+              background: "navy",
+              color: "white",
+              
+              padding: "10px",
+              borderRadius: "10px",
+              marginRight: "20px",
+              marginLeft: "20px",
+            }}
+          >
+            <p>{data.input}</p>
+            <p>{data.output}</p>
+          </div>
         </div>
       ) : (
         <div>No data found for ID: {documentId}</div>

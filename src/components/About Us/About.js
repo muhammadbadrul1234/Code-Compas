@@ -4,13 +4,14 @@ import CNavbar from '../AdminPage/Home Page/ccomponents/CNavbar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import HomeNavbar from "../../components/LandingPage/Components/Navbar";
+import UserNavbar from '../Navbar/Navbar';
 
 
 
 export default function About() {
     return (
         <>
-            <HomeNavbar/>
+            <UserNavbar/>
             <Box height={30} />
             <Box sx={{ display: 'flex' }}>
             

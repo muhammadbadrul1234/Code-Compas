@@ -5,14 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase";
 import styled from "styled-components";
 import HomeNavbar from "../LandingPage/Components/Navbar";
+import Swal from "sweetalert2";
 import UserNavbar from "../Navbar/Navbar";
-import AboutBackground from "./assets/about-background.png";
+import BannerBackground from "./assets/home-banner-background.png";
 
-const Login = () => {
+const Reset = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -31,56 +32,34 @@ const Login = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const login = async (e) => {
-    try {
-      const user = await signInWithEmailAndPassword(
-        auth,
-        formValues.email,
-        formValues.password
-      );
-      const role = await getUserRole(formValues.email);
+  const reset = async (e) => {
+      try {
+          const user = await sendPasswordResetEmail(auth, formValues.email);
+          console.log(user);
 
-
-      // if(!role && user){
-      //   setLoginError("User Banned! Contact The Admin");
-      // }
-
-      if (role === "Admin") {
-        navigate("/admin");
-      }
-      else if(role === "User") {
-        navigate("/home");
-      }
-
-      // if (formValues.email === "admin@gmail.com") {
-      //   navigate("/admin");
-      // } else {
-      //   navigate("/home");
-      // }
+          
     } catch (error) {
       console.log(error.message);
       const errorMessage = error.message;
       const role = await getUserRole(formValues.email);
       console.log(role);
       if (errorMessage.includes("auth/wrong-password")) {
-        setLoginError(
-          "Wrong Password"
-        );
-      }else if (errorMessage.includes("auth/user-not-found")) {
+        setLoginError("Wrong Password");
+      } else if (errorMessage.includes("auth/user-not-found")) {
         setLoginError("No Registered User Found");
       } else if (errorMessage.includes("auth/too-many-requests")) {
-        setLoginError(
-          "Too Many Requests"
-        )
-      }
-      else {
+        setLoginError("Too Many Requests");
+      } else {
         setLoginError(errorMessage);
       }
 
-      if(!role){
-        setLoginError("User Banned! Contact The Admin");
-      }
-
+      if (!role && errorMessage.includes("auth/user-not-found") ) {
+        setLoginError("No Registered User Found");
+          }
+      else {
+          setLoginError("User Banned! Contact The Admin");
+          
+          }
     }
   };
 
@@ -103,11 +82,11 @@ const Login = () => {
         return userRole;
       } else {
         console.log("User not found in Firestore");
-        return null; 
+        return null;
       }
     } catch (error) {
       console.error("Error fetching user data:", error.message);
-      return null; 
+      return null;
     }
   };
 
@@ -115,15 +94,25 @@ const Login = () => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
-    getUserRole(formValues.email);
-    
   };
 
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-      login();
+        console.log(formValues);
+        reset();
+        return Swal.fire({
+          icon: "Success",
+          title: "Success!",
+          text: "Password Reset Email Sent",
+          showConfirmButton: true,
+          customClass: {
+            confirmButton: "btn-custom-color", // Add your custom class here
+          },
+        }).then(() => {
+          window.location.href = "/login";
+        });
+
     }
   }, [formErrors]);
 
@@ -135,12 +124,7 @@ const Login = () => {
     } else if (!emailRegex.test(values.email)) {
       errors.email = "This is not a valid email format!";
     }
-    if (!values.password) {
-      errors.password = "Password is required";
-    }
-    // else if (values.password.length < 8) {
-    //   errors.password = "Password must be at least 8 characters";
-    // }
+
     return errors;
   };
 
@@ -148,15 +132,13 @@ const Login = () => {
     <>
       <UserNavbar />
       <LoginSection className="Login">
-        {/* <Header/> */}
-
         <div className="container mt-5">
-          <div className="about-background-image-container">
-            <img src={AboutBackground} alt="" />
+          <div className="home-bannerImage-container">
+            <img src={BannerBackground} alt="" />
           </div>
           <div className="Login-content">
             <div className="Login-h"></div>
-            <h2>Login</h2>
+            <h2>Reset Password</h2>
             <form className="Login-form" id="Login-form">
               <p>{loginError}</p>
               {/* Email */}
@@ -176,38 +158,10 @@ const Login = () => {
                 <p>{formErrors.email}</p>
               </div>
 
-              {/* Password */}
-              <div className="form-group">
-                <label htmlFor="password"></label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  id="password"
-                  autoComplete="off"
-                  placeholder="Password"
-                  // onChange={(e) => setPassword(e.target.value)}
-                  value={formValues.password}
-                  onChange={handleChange}
-                />
-              </div>
-              <p>{formErrors.password}</p>
-
               {/* {error && <span>Wrong Email or Password</span>} */}
 
               {/* Checkbox */}
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  name="checkbox"
-                  id="checkbox"
-                  className="checkbox"
-                  onClick={toggle}
-                />{" "}
-                Show Password
-              </div>
-              <div>
-                <a href="/reset">Forgot Password?</a>
-              </div>
+
               <div>
                 <a href="/signup">Don't have an account? Sign Up</a>
               </div>
@@ -218,7 +172,7 @@ const Login = () => {
                   name="Login"
                   id="Login"
                   className="form-submit"
-                  value="Login"
+                  value="Reset Password"
                   onClick={handleSubmit}
                 />
               </div>
@@ -243,10 +197,13 @@ const LoginSection = styled.section`
     border-radius: 5px;
     margin-top: 200px;
   }
-  .about-background-image-container {
+  .home-bannerImage-container {
     position: absolute;
-    left: -150px;
+    width: 100%;
+    top: -100px;
+    right: -170px;
     z-index: -2;
+    max-width: 1000px;
   }
   form {
     width: 100%;
@@ -475,4 +432,4 @@ const LoginSection = styled.section`
   }
 `;
 
-export default Login;
+export default Reset;

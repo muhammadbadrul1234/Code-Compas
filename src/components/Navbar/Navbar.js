@@ -1,33 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
-import Logo from "../Assets/h1logo.png";
+import Logo from "./Assets/h1logo.png";
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
-import { MdMenu, MdShoppingCart } from "react-icons/md";
-import { useCartContext } from "../../Courses/context/cart_context";
-const HomeNavbar = () => {
+const UserNavbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
   const ishomePage = location.pathname === "/";
   const isDevPage = location.pathname === "/devs";
   const isaboutPage = location.pathname === "/about";
-
-
-  const isCoursePage = location.pathname === "/home";
-  const isProblemSetPage = location.pathname === "/problemset";
-  const isAssignmentPage = location.pathname === "/upload";
-  const isBlogsPage = location.pathname === "/blogs";
-  const isEditorPage = location.pathname === "/craftpen";
-  const isProfilePage = location.pathname === "/profile";
-
-  const { total_items } = useCartContext();
-
-
-  
-
-  const menuOptions = [
-  ];
+  const menuOptions = [];
   return (
     <HomeNavbarSection>
       <div>
@@ -37,10 +20,10 @@ const HomeNavbar = () => {
             top: 0,
             left: 0,
             right: 0,
-            zIndex: 10,
+            zIndex: 100,
             backgroundColor: "rgba(255, 255, 255, 0.8)",
             backdropFilter: "blur(5px)",
-            padding: "10px 30px",
+            padding: "10px 100px",
           }}
         >
           {/* Your existing navigation content */}
@@ -57,52 +40,30 @@ const HomeNavbar = () => {
 
           <div className="menu">
             <ul>
-              {!isCoursePage && (
+              {!ishomePage && (
                 <li>
-                  <Link to="/home">Courses</Link>
+                  <Link to="/">Home</Link>
                 </li>
               )}
-              {!isProblemSetPage && (
+              {!isDevPage && (
                 <li>
-                  <Link to="/problemset">Problemset</Link>
+                  <Link to="/devs">Developers</Link>
                 </li>
               )}
-
-              {!isAssignmentPage && (
+              {!isaboutPage && (
                 <li>
-                  <Link to="/upload">Assignment</Link>
+                  <Link to="/about">About Us</Link>
                 </li>
               )}
-              {/* <Link to="/cart" className="cart-btn">
-                <MdShoppingCart />
-                <span className="item-count-badge">{total_items}</span>
-              </Link> */}
-              {!isProfilePage && (
+              {!isLoginPage && (
                 <li>
-                  <Link to="/home">
-                    <Link to="/profile">Profile</Link>
+                  <Link to="/login">
+                    <button className="primary-button">Login</button>
                   </Link>
                 </li>
               )}
-
-              <li>
-          
-                  <Link to="/cart" className="cart-btn">
-                    <MdShoppingCart />
-                    <span className="item-count-badge">{total_items}</span>
-                  </Link>
-       
-              </li>
             </ul>
           </div>
-
-          {/* <button
-              type="button"
-              className="sidebar-open-btn"
-              onClick={() => openSidebar()}
-            >
-              <MdMenu />
-            </button> */}
         </nav>
 
         <div style={{ marginTop: "100px" }}>
@@ -127,38 +88,17 @@ const HomeNavbarSection = styled.section`
   }
 
   .navbar-links-container a {
-    margin-right: 3rem;
+    margin-right: 2rem;
     text-decoration: none;
     color: black;
     font-size: 1.1rem;
     font-weight: 600;
   }
-  .cart-btn {
-    margin-right: 18px;
-    font-size: 23px;
-    position: relative;
-    .item-count-badge {
-      background-color: var(--clr-orange);
-      position: absolute;
-      right: -10px;
-      top: -10px;
-      font-size: 12px;
-      font-weight: 700;
-      display: block;
-      width: 23px;
-      height: 23px;
-      color: var(--clr-white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
 
   .menu {
-    width: 400px;
-    grid-column: 3/3;
-    margin-right: 3rem;
+    width: 600px;
+    grid-column: 6/6;
+    margin-right: 1rem;
     margin-top: 1rem;
     align-items: center;
     justify-content: center;
@@ -210,4 +150,4 @@ const HomeNavbarSection = styled.section`
   }
 `;
 
-export default HomeNavbar;
+export default UserNavbar;

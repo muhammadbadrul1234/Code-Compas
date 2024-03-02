@@ -7,17 +7,18 @@ import Code from './Code';
 import Result from './Result';
 import Header from './Header';
 import HomeNavbar from '../../LandingPage/Components/Navbar';
+import UserNavbar from '../../Navbar/Navbar';
 
 const CraftPen = () => {
     return (
-        <>
-            <HomeNavbar/>
-            
-            <Code />
-            Result:
-            <Result />
-        </>
-    )
+      <>
+        <UserNavbar />
+        
+        <Code />
+        Result:
+        <Result />
+      </>
+    );
 }
 
 export default CraftPen;
