@@ -163,11 +163,11 @@ const AdminProfilePage = ({ userId }) => {
             </p>
           </div>
 
-          <div className="form">
+          {/* <div className="form">
             <button className="form-submit" onClick={handleSubmit}>
               Edit
             </button>
-          </div>
+          </div> */}
         </div>
         <div
           style={{

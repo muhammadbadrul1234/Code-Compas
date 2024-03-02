@@ -26,6 +26,7 @@ import BlogManage from "./components/AdminPage/BlogManagement/BlogManage";
 import Reset from "./components/LoginPage/Reset";
 import UserProfile from "./components/UserProfile/userProfile";
 import AdminProfile from "./components/AdminPage/Profile/adminProfile";
+import CourseManage from "./components/AdminPage/CourseManagement/CourseManagement";
 
 function App() {
   const isMobile = window.innerWidth <= 899;
@@ -74,6 +75,7 @@ function App() {
         <Route path="/usermanage" element={<UserManage />} />
         <Route path="/prbmanage" element={<ProblemSetManage />} />
         <Route path="/blogmanage" element={<BlogManage />} />
+        <Route path="/coursemanage" element={<CourseManage />} />
         <Route path="/craftpen" element={<CraftPen />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/aprofile" element={<AdminProfile />} />
