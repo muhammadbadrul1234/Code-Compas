@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar1 from "./Navbar1";
+
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CNavbar from "./AdminPage/Home Page/ccomponents/CNavbar";

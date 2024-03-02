@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { db, app } from "./firebase";
 import "firebase/firestore";
 
-import Navbar1 from "./Navbar1";
+
 import Fetch from "./FetchData";
 import { useNavigate} from "react-router-dom";
 import HomeNavbar from "./LandingPage/Components/Navbar";

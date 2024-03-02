@@ -1,26 +1,39 @@
 // src/App.js (or any other component)
 import React from "react";
 import { FetchDataById } from "./FullDescription";
-import { Header } from "./Header";
+
 import "../css/Fetch.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import qs from "qs";
-import "../css/Compiler.css";
+// import "../css/Compiler.css";
 import Compiler_comp from "./Compiler_comp";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import UserNavbar from "./Navbar/Navbar";
 import HomeNavbar from "./LandingPage/Components/Navbar";
-import { db, app } from "./firebase";
+import { db, app, auth } from "./firebase";
+import {
+  collection,
+  getCollection,
+  getDocs,
+  addDoc,
+  setDoc,
+  doc,
+  arrayUnion,
+  updateDoc,
+} from "firebase/firestore";
+import styled from "styled-components";
 
 const Fetch = (props) => {
   const [fdata, setfData] = useState(null);
-  const [ac, setAc] = useState();
+  const [ac, setAc] = useState("");
   // const documentId = "HpKm1Z25GUJzKPh6i9cj";
   const location = useLocation();
   const { data } = location.state || {};
   const documentId = data;
+  const [problemName, setProblemName] = useState("");
+  const[input,setInput]=useState(null)
   // console.log(data);
   // const { documentId } = useParams();
 
@@ -59,27 +72,43 @@ const Fetch = (props) => {
       console.log(error);
     }
   };
-   useEffect(() => {
-     const fetchData = async () => {
-       try {
-         const docRef = db.collection("problemset").doc(documentId);
-         const docSnapshot = await docRef.get();
-         if (docSnapshot.exists) {
-           setfData(docSnapshot.data());
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const docRef = db.collection("problemset").doc(documentId);
+        const docSnapshot = await docRef.get();
+        if (docSnapshot.exists) {
+          setfData(docSnapshot.data());
           //  console.log(fdata.name);
-         } else {
-           console.log("Document not found!");
-         }
-       } catch (error) {
-         console.error("Error fetching document:", error);
-       } finally {
-       }
-     };
+        } else {
+          console.log("Document not found!");
+        }
+      } catch (error) {
+        console.error("Error fetching document:", error);
+      } finally {
+      }
+      console.log("input is :",fdata.input);
+      if (fdata.input) {
+                setInput(fdata.input);
+        console.log(input);
+        console.log("we arre");
+        
+      }
 
-     fetchData();
-   }, [documentId]);
+    };
 
-  
+    fetchData();
+  }, [documentId]);
+
+  const solvedProblem = problemName;
+  const datawrite = async (e) => {
+    const docRef = doc(db, "problemdata", auth.currentUser.email);
+
+    await updateDoc(docRef, {
+      solvedProblem: arrayUnion(solvedProblem),
+    });
+
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -117,7 +146,7 @@ const Fetch = (props) => {
         language: language,
         version: "latest",
         code: code,
-        input: null,
+        input: input,
       },
     };
 
@@ -127,7 +156,7 @@ const Fetch = (props) => {
     // } catch (error) {
     //   console.error(error);
     // }
-    
+
     ///////////////////////////
     try {
       const response = await axios(options);
@@ -135,27 +164,33 @@ const Fetch = (props) => {
       // console.log(response.data);
       // console.log(response.data.output);
       // console.log(response.data.timestamp);
-      console.log(response.data.output);
-      console.log(fdata.output);
 
-
-      
       // Store the response data in the state
     } catch (error) {
       console.log(error.response.data);
     }
 
+    const xy = fdata.category + ": " + fdata.output;
+    setProblemName(xy);
+
+    console.log(responseData);
+    console.log(fdata);
+
     if (fdata.output === responseData.output) {
       const ss = "Accepted";
       setAc(ss);
+      datawrite();
     } else {
       console.log("Wrong Answer");
       const ss = "Wrong Answer";
       setAc(ss);
+      
     }
   };
-
- 
+  useEffect(() => {
+    // Log the current ac status for debugging purposes
+    console.log("Current ac status:", ac);
+  }, [ac]);
 
   return (
     <>
@@ -168,81 +203,147 @@ const Fetch = (props) => {
             <FetchDataById documentId={documentId} />
           </div>
         </div>
-        <div className="right">
-          {/* <Compiler_comp /> */}
-          <center>
-            <section className="compiler">
-              <div className="compiler">
-                {/* <h1>Problem</h1> */}
-                <p>
-                  {/* Write a program to print "Hello World" in a input loop the
+        <EditorComponent>
+          <div className="right">
+            {/* <Compiler_comp /> */}
+            <center>
+              <section className="compiler">
+                <div className="compiler">
+                  {/* <h1>Problem</h1> */}
+                  <p>
+                    {/* Write a program to print "Hello World" in a input loop the
               language of your choice. */}
-                </p>
-                {/* sample input */}
-                <p></p>
-                {/* sample output */}
-                {/* <p>Hello World</p> */}
-              </div>
-              <div className="compiler">
-                <h1>Code</h1>
-                <form id="myform" name="myform" onSubmit={submitHandler}>
-                  <textarea
-                    className="code"
-                    id="code"
-                    rows="13"
-                    cols="100"
-                    name="code"
-                  ></textarea>
-                  <br />
-                  LANGUAGE:{" "}
-                  <select name="language">
-                    {/* <option value="c">C</option>
-                <option value="cpp">C++</option>
-                <option value="java">Java</option> */}
-                    <option value="python3">Python</option>
-                    {/* <option value="Go">GoLang</option>
+                  </p>
+                  {/* sample input */}
+                  <p></p>
+                  {/* sample output */}
+                  {/* <p>Hello World</p> */}
+                </div>
+                <div className="compiler">
+                  <h1>Code</h1>
+                  <form id="myform" name="myform" onSubmit={submitHandler}>
+                    <textarea
+                      className="code"
+                      id="code"
+                      rows="13"
+                      cols="100"
+                      name="code"
+                    ></textarea>
+                    <br />
+                    LANGUAGE:{" "}
+                    <select name="language">
+                      <option value="python3">Python</option>
+                      <option value="c">C</option>
+                      <option value="cpp17">C++</option>
+                      <option value="java">Java</option>
+
+                      {/* <option value="Go">GoLang</option>
                 <option value="cs">C-Sharp</option>
                 <option value="js">NodeJS</option> */}
-                  </select>
-                  <br />
-                  {/* Compile With input:
+                    </select>
+                    <br />
+                    {/* Compile With input:
               <input type="radio" name="inputRadio" value="true" /> Yes
               <input type="radio" name="inputRadio" value="false" /> No */}
-                  <br />
-                  <input type="submit" value="submit" name="submit" />
-                </form>
-              </div>
-              <div>
-                {responseData ? (
-                  <pre>
-                    {/* {JSON.stringify(responseData, null, 2)} */}
-                    <table>
-                      <thead>
-                        <th>Expected Output</th>
-                        <th>Your Output</th>
-                        <th>Result</th>
-                        <th>Comment</th>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{fdata.output}</td>
-                          <td>{responseData.output}</td>
-                          <td>{ac}</td>
-                          <td>{responseData.error}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </pre>
-                ) : (
-                  ""
-                )}
-              </div>
-            </section>
-          </center>
-        </div>
+                    <br />
+                    <input type="submit" value="submit" name="submit" />
+                  </form>
+                  <h2
+                    className="ac"
+                    style={{ color: ac === "Accepted" ? "green" : "red" }}
+                  >
+                    {ac}
+                  </h2>
+                </div>
+                <div>
+                  {responseData ? (
+                    <pre>
+                      {/* {JSON.stringify(responseData, null, 2)} */}
+                      <table>
+                        <thead>
+                          <th>Expected Output</th>
+                          <th>Your Output</th>
+                          <th>Problem</th>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{fdata.output}</td>
+                            <td>{responseData.output}</td>
+                            <td>{responseData.error}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <p style={{ color: "red" }}></p>
+                    </pre>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </section>
+              
+            </center>
+            
+          </div>
+          
+        </EditorComponent>
+       
       </div>
     </>
   );
 };
+
+const EditorComponent = styled.div`
+  table,
+  thead,
+  th,
+  tbody {
+    padding: 1rem;
+    width: 20px;
+  }
+
+  .compiler1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical;
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    grid-column-gap: 10px;
+
+    padding: 10px;
+  }
+
+  .left {
+    display: flex;
+    flex-direction: column;
+
+    background-color: #cecece;
+    border-radius: 20px;
+    padding: 20px;
+    height: 100vh;
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+
+    background-color: #cecece;
+    border-radius: 20px;
+    padding: 20px;
+    height: 100vh;
+  }
+`;
 
 export default Fetch;

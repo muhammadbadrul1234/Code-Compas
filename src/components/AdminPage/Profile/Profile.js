@@ -26,11 +26,12 @@ import {
 
 const AdminProfilePage = ({ userId }) => {
   const [userData, setUserData] = useState(null);
+  const [problemData, setProblemData] = useState(null);
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const x = auth.currentUser.email;
+  // const x = auth.currentUser.email;
   const dataArray = [];
   const firstItem = dataArray.length > 0 ? dataArray[0] : null;
 
@@ -42,7 +43,7 @@ const AdminProfilePage = ({ userId }) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const userRef = firestore.collection("UserData").doc(x);
+      const userRef = firestore.collection("UserData").doc(auth.currentUser.email);
 
       try {
         const userDoc = await userRef.get();
@@ -59,7 +60,9 @@ const AdminProfilePage = ({ userId }) => {
       }
     };
     const fetchCourses = async () => {
-      const userRef = firestore.collection("purchasedata").doc(x);
+      const userRef = firestore
+        .collection("purchasedata")
+        .doc(auth.currentUser.email);
 
       try {
         const userDoc = await userRef.get();
@@ -77,13 +80,15 @@ const AdminProfilePage = ({ userId }) => {
     };
 
     const fetchProblemset = async () => {
-      const userRef = firestore.collection("problemdata").doc(x);
+      const userRef = firestore
+        .collection("problemdata")
+        .doc(auth.currentUser.email);
 
       try {
         const userDoc = await userRef.get();
         if (userDoc.exists) {
-          setCourseData(userDoc.data());
-          console.log("Course Data: ", courseData);
+          setProblemData(userDoc.data());
+          console.log("Solved Problem: ", problemData);
         } else {
           setError(new Error("Data not found."));
         }
@@ -96,6 +101,7 @@ const AdminProfilePage = ({ userId }) => {
 
     fetchCourses();
     fetchUserData();
+    fetchProblemset();
   }, [userId]);
 
   if (loading) {
@@ -119,7 +125,10 @@ const AdminProfilePage = ({ userId }) => {
       <AdminProfileSection>
         <div>
           <h1>
-            {userData.firstName}&nbsp;{userData.lastName}'s Profile
+            {/* {userData.firstName}&nbsp;{userData.lastName}'s Profile */}
+            {userData.firstName && userData.lastName
+              ? `${userData.firstName} ${userData.lastName}'s Profile`
+              : "Default Profile"}
           </h1>
           <div
             style={{
@@ -132,17 +141,25 @@ const AdminProfilePage = ({ userId }) => {
             }}
           >
             <p>
-              <strong>Name:</strong> {userData.firstName}&nbsp;
-              {userData.lastName}
+              {/* <strong>Name:</strong> {userData.firstName}&nbsp;
+              {userData.lastName} */}
+              <strong>Name:</strong>{" "}
+              {userData.firstName && userData.lastName
+                ? `${userData.firstName} ${userData.lastName}`
+                : "N/A"}
             </p>
             <p>
-              <strong>Email:</strong> {userData.email}
+              {/* <strong>Email:</strong> {userData.email} */}
+              <strong>Email:</strong> {userData.email ? userData.email : "N/A"}
             </p>
             <p>
-              <strong>Phone:</strong> {userData.mobile}
+              {/* <strong>Phone:</strong> {userData.mobile} */}
+              <strong>Phone:</strong>{" "}
+              {userData.mobile ? userData.mobile : "N/A"}
             </p>
             <p>
-              <strong>Role:</strong> {userData.role}
+              {/* <strong>Role:</strong> {userData.role} */}
+              <strong>Role:</strong> {userData.role ? userData.role : "N/A"}
             </p>
           </div>
 
@@ -178,12 +195,24 @@ const AdminProfilePage = ({ userId }) => {
                 </tr>
               </thead>
               <tbody>
-                {courseData.courseName.map((course, index) => (
+                {/* {courseData.courseName.map((course, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{course}</td>
                   </tr>
-                ))}
+                ))} */}
+                {courseData.courseName && courseData.courseName.length > 0 ? (
+                  courseData.courseName.map((course, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{course}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="2">No courses available</td>
+                  </tr>
+                )}
               </tbody>
             </table>
 
@@ -191,11 +220,10 @@ const AdminProfilePage = ({ userId }) => {
           </div>
         </div>
         <div
-            style={{
-
-              marginTop: "40px",
-            }}
-          ></div>
+          style={{
+            marginTop: "40px",
+          }}
+        ></div>
 
         <div>
           <h1>Solved Problems</h1>
@@ -217,12 +245,25 @@ const AdminProfilePage = ({ userId }) => {
                 </tr>
               </thead>
               <tbody>
-                {courseData.courseName.map((course, index) => (
+                {/* {problemData.solvedProblem.map((solved, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{course}</td>
+                    <td>{solved}</td>
                   </tr>
-                ))}
+                ))} */}
+                {problemData.solvedProblem &&
+                problemData.solvedProblem.length > 0 ? (
+                  problemData.solvedProblem.map((solved, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{solved}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="2">No solved problems available</td>
+                  </tr>
+                )}
               </tbody>
             </table>
 

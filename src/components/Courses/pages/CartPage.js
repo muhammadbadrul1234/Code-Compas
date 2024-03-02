@@ -43,8 +43,6 @@ const CartPage = () => {
   const courseId = cartItems[0].courseID;
   const coursePrice = cartItems[0].discounted_price;
   const mentor = cartItems[0].creator;
-  
-  const email = auth.currentUser.email;
 
 
 
